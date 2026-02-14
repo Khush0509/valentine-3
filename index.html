@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Experience ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+color:white;
+}
+
+/* Romantic background */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-1;
+background-size:cover;
+background-position:center;
+transition:1s;
+}
+
+/* Screens */
+.screen{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+transition:0.8s;
+}
+
+.hidden{opacity:0;pointer-events:none;}
+
+h1{
+font-family:'Dancing Script';
+font-size:2.4rem;
+}
+
+/* Buttons */
+button{
+padding:12px 25px;
+border:none;
+border-radius:30px;
+background:#ff4d88;
+color:white;
+cursor:pointer;
+margin-top:20px;
+}
+
+/* Glass card */
+.glass{
+background:rgba(255,255,255,0.2);
+backdrop-filter:blur(14px);
+border-radius:20px;
+padding:25px;
+max-width:350px;
+}
+
+/* Magical puzzle */
+#puzzleContainer{
+width:260px;
+height:260px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:6px;
+margin-bottom:20px;
+}
+
+.dropzone{
+background:rgba(255,255,255,0.25);
+border-radius:14px;
+box-shadow:0 0 15px rgba(255,255,255,0.2);
+}
+
+#pieces{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.piece{
+width:120px;
+height:120px;
+background-image:url('puzzlepic.jpg');
+background-size:240px 240px;
+border-radius:14px;
+cursor:grab;
+transition:0.4s;
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-6px);}
+}
+
+/* Confetti petals */
+.petal{
+position:absolute;
+font-size:20px;
+animation:fall 4s linear forwards;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg" id="bg"></div>
+
+<audio id="music" src="mus1.mp3" loop></audio>
+<audio id="snapSound" src="snap.mp3"></audio>
+
+<!-- SCREEN 1 -->
+<div id="s1" class="screen">
+<h1>Step Into My Love World ❤️</h1>
+<button onclick="next(1)">Enter</button>
+</div>
+
+<!-- SCREEN 2 HOLD -->
+<div id="s2" class="screen hidden">
+<h1>Unlock My Heart</h1>
+<div id="holdBtn" style="font-size:70px">❤️</div>
+<p>Press & Hold</p>
+</div>
+
+<!-- SCREEN 3 PUZZLE -->
+<div id="s3" class="screen hidden">
+<h1>Complete Our Picture Together 🧩</h1>
+
+<div id="puzzleContainer">
+<div class="dropzone" data-pos="0"></div>
+<div class="dropzone" data-pos="1"></div>
+<div class="dropzone" data-pos="2"></div>
+<div class="dropzone" data-pos="3"></div>
+</div>
+
+<div id="pieces"></div>
+</div>
+
+<!-- SCREEN 4 LETTER -->
+<div id="s4" class="screen hidden">
+<div class="glass">
+<h1>For You 💌</h1>
+<p>You make my world softer, calmer and happier. I love being yours.</p>
+<button onclick="next(4)">Continue</button>
+</div>
+</div>
+
+<!-- SCREEN 5 HUG -->
+<div id="s5" class="screen hidden">
+<h1>Hold With Two Fingers 🤍</h1>
+<img src="hugpic.jpg" width="220" style="border-radius:20px">
+</div>
+
+<!-- SCREEN 6 FINAL -->
+<div id="s6" class="screen hidden">
+<div class="glass">
+<h1>Happy Valentine's Day ❤️</h1>
+<img src="finalpic.jpg" width="220" style="border-radius:20px">
+<p>You make me the happiest person alive.</p>
+</div>
+</div>
+
+<script>
+
+let music=document.getElementById("music")
+let snapSound=document.getElementById("snapSound")
+
+function playMusic(){
+music.play().catch(()=>{})
+}
+
+/* Romantic backgrounds */
+let bgs=[
+"url('https://images.unsplash.com/photo-1518199266791-5375a83190b7')",
+"url('https://images.unsplash.com/photo-1526045612212-70caf35c14df')",
+"url('https://images.unsplash.com/photo-1501785888041-af3ef285b470')",
+"url('https://images.unsplash.com/photo-1492724441997-5dc865305da7')",
+"url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2')",
+"url('https://images.unsplash.com/photo-1474552226712-ac0f0961a954')"
+]
+
+function setBG(n){
+document.getElementById("bg").style.backgroundImage=bgs[n-1]
+}
+
+setBG(1)
+
+/* Navigation */
+function next(n){
+document.getElementById("s"+n).classList.add("hidden")
+document.getElementById("s"+(n+1)).classList.remove("hidden")
+setBG(n+1)
+playMusic()
+}
+
+/* HOLD HEART */
+let hold
+document.getElementById("holdBtn").addEventListener("pointerdown",()=>{
+playMusic()
+hold=setTimeout(()=>next(2),1200)
+navigator.vibrate?.([100,80,100])
+})
+
+document.getElementById("holdBtn").addEventListener("pointerup",()=>clearTimeout(hold))
+
+/* MAGICAL PUZZLE */
+let piecesContainer=document.getElementById("pieces")
+let zones=document.querySelectorAll(".dropzone")
+
+let order=[0,1,2,3].sort(()=>Math.random()-0.5)
+
+order.forEach(pos=>{
+let piece=document.createElement("div")
+piece.className="piece"
+piece.draggable=true
+piece.dataset.correct=pos
+
+let x=pos%2
+let y=Math.floor(pos/2)
+
+piece.style.backgroundPosition=`-${x*120}px -${y*120}px`
+
+piece.addEventListener("dragstart",e=>{
+e.dataTransfer.setData("piece",pos)
+})
+
+piecesContainer.appendChild(piece)
+})
+
+zones.forEach(zone=>{
+zone.addEventListener("dragover",e=>e.preventDefault())
+
+zone.addEventListener("drop",e=>{
+let piecePos=e.dataTransfer.getData("piece")
+
+if(zone.dataset.pos===piecePos){
+
+let piece=[...document.querySelectorAll(".piece")]
+.find(p=>p.dataset.correct===piecePos)
+
+zone.appendChild(piece)
+piece.style.animation="none"
+piece.style.boxShadow="0 0 20px pink"
+piece.draggable=false
+
+snapSound.play().catch(()=>{})
+
+createPetals()
+checkComplete()
+}
+})
+})
+
+function checkComplete(){
+let filled=0
+zones.forEach(z=>{
+if(z.children.length>0) filled++
+})
+
+if(filled===4){
+setTimeout(()=>next(3),1200)
+}
+}
+
+/* Petal Confetti */
+function createPetals(){
+for(let i=0;i<8;i++){
+let p=document.createElement("div")
+p.className="petal"
+p.innerHTML="🌹"
+p.style.left=Math.random()*100+"%"
+document.body.appendChild(p)
+
+setTimeout(()=>p.remove(),4000)
+}
+}
+
+/* TWO FINGER HUG */
+document.getElementById("s5").addEventListener("touchstart",e=>{
+if(e.touches.length>=2){
+navigator.vibrate?.([150,80,150])
+setTimeout(()=>next(5),1500)
+}
+})
+
+</script>
+
+</body>
+</html>
