@@ -3,26 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Valentine's Day ❤️</title>
+<title>Valentine ❤️</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
--webkit-user-select:none;
 user-select:none;
--webkit-touch-callout:none;
+-webkit-user-select:none;
 }
 
 body{
 font-family: 'Segoe UI', sans-serif;
-background:black;
-color:white;
 overflow:hidden;
+color:white;
 }
 
-/* ---------- GENERAL PAGE ---------- */
+/* ---------- PAGES ---------- */
 
 .page{
 position:absolute;
@@ -32,9 +31,9 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-transition:1s ease;
 opacity:0;
 pointer-events:none;
+transition:1s ease;
 }
 
 .page.active{
@@ -42,90 +41,98 @@ opacity:1;
 pointer-events:auto;
 }
 
-/* ---------- PUZZLE ---------- */
+/* ---------- BACKGROUNDS ---------- */
 
-.puzzle-container{
-width:300px;
-height:300px;
-position:relative;
-border-radius:20px;
-overflow:hidden;
+.bg-romantic{
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
 }
 
-.piece{
-width:50%;
-height:50%;
-position:absolute;
-background-image:url('pic1.jpg');
-background-size:200% 200%;
-border:2px solid white;
-cursor:pointer;
-transition:.3s;
-touch-action:none;
+.bg-glass{
+background:url("pic2.jpg") center/cover no-repeat;
 }
-
-/* Correct piece positions */
-.piece[data-pos="0"]{background-position:0% 0%;}
-.piece[data-pos="1"]{background-position:100% 0%;}
-.piece[data-pos="2"]{background-position:0% 100%;}
-.piece[data-pos="3"]{background-position:100% 100%;}
-
-.slot{
-width:50%;
-height:50%;
-position:absolute;
-border:2px dashed rgba(255,255,255,0.4);
-}
-
-/* Slot positions */
-.slot[data-slot="0"]{left:0; top:0;}
-.slot[data-slot="1"]{right:0; top:0;}
-.slot[data-slot="2"]{left:0; bottom:0;}
-.slot[data-slot="3"]{right:0; bottom:0;}
 
 /* ---------- HEART HOLD ---------- */
 
 .heart{
-font-size:70px;
+font-size:80px;
 animation:beat 1s infinite;
 }
 
 @keyframes beat{
 0%,100%{transform:scale(1)}
-50%{transform:scale(1.2)}
+50%{transform:scale(1.25)}
 }
 
-/* ---------- HUG PAGE ---------- */
+/* ---------- PUZZLE ---------- */
+
+.puzzle-wrapper{
+width:90vw;
+max-width:320px;
+height:90vw;
+max-height:320px;
+display:grid;
+grid-template-columns:1fr 1fr;
+grid-template-rows:1fr 1fr;
+gap:5px;
+}
+
+.slot{
+border:2px dashed rgba(255,255,255,0.4);
+border-radius:15px;
+position:relative;
+}
+
+.piece{
+width:45%;
+height:45%;
+position:absolute;
+background-image:url("pic1.jpg");
+background-size:200% 200%;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.4);
+touch-action:none;
+}
+
+/* puzzle image positions */
+[data-piece="0"]{background-position:0% 0%;}
+[data-piece="1"]{background-position:100% 0%;}
+[data-piece="2"]{background-position:0% 100%;}
+[data-piece="3"]{background-position:100% 100%;}
+
+/* ---------- HUG ---------- */
 
 .hug{
-width:80%;
+width:85%;
 max-width:350px;
 border-radius:20px;
 box-shadow:0 0 40px pink;
+animation:zoom 2s ease forwards;
+}
+
+@keyframes zoom{
+from{transform:scale(.7);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 
 /* ---------- FINAL TEXT ---------- */
 
-.final{
-position:absolute;
-width:100%;
-height:100%;
-background:url('pic2.jpg') center/cover no-repeat;
-padding:30px;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
 .glass{
 background:rgba(255,255,255,0.15);
 backdrop-filter:blur(15px);
-padding:25px;
+padding:20px;
 border-radius:20px;
+width:90%;
 max-width:500px;
+font-size:17px;
 line-height:1.6;
-font-size:18px;
 }
+
+.typing span{
+display:block;
+opacity:0;
+transform:translateY(20px);
+}
+
 </style>
 </head>
 
@@ -133,110 +140,194 @@ font-size:18px;
 
 <audio id="music" src="mus1.mp3"></audio>
 
-<!-- PAGE 1 PUZZLE -->
-<div class="page active" id="puzzlePage">
+<!-- ❤️ PAGE 1 HEART HOLD -->
+<div class="page active bg-romantic" id="heartPage">
 
-<div class="puzzle-container" id="puzzle">
+<h2>Hold the heart to unlock ❤️</h2>
+<div class="heart" id="heart">❤️</div>
+
+</div>
+
+<!-- 🧩 PAGE 2 PUZZLE -->
+<div class="page bg-romantic" id="puzzlePage">
+
+<h3>Complete our memory 🧩</h3>
+
+<div class="puzzle-wrapper">
 
 <div class="slot" data-slot="0"></div>
 <div class="slot" data-slot="1"></div>
 <div class="slot" data-slot="2"></div>
 <div class="slot" data-slot="3"></div>
 
-<div class="piece" data-pos="0" style="left:0;top:0;"></div>
-<div class="piece" data-pos="1" style="right:0;top:0;"></div>
-<div class="piece" data-pos="2" style="left:0;bottom:0;"></div>
-<div class="piece" data-pos="3" style="right:0;bottom:0;"></div>
-
-</div>
 </div>
 
-<!-- PAGE 2 HEART HOLD -->
-<div class="page" id="heartPage">
-<h2>Hold the heart ❤️</h2>
-<div class="heart" id="heart">❤️</div>
 </div>
 
-<!-- PAGE 3 HUG -->
-<div class="page" id="hugPage">
+<!-- 🤍 PAGE 3 HUG -->
+<div class="page bg-romantic" id="hugPage">
+
 <h2>Sending you the warmest hug 🤍</h2>
 <img src="hug.jpg" class="hug">
-</div>
-
-<!-- PAGE 4 FINAL -->
-<div class="page" id="finalPage">
-<div class="final">
-<div class="glass">
-
-Goooooodmorningsss ❤️  
-Today is Valentine’s Day…finally ek aur special din jo sirf hum dono ka hai…tbh jitna time humne saath spend kiya hai na woh kabhi bhot fast nikal jata hai aur kabhi lagta hai jaise har moment ko dil me store kar liya ho…tumhare saath rehke maine khud ka ek naya version dekha hai…ek aisa version jo zyada happy rehta hai, zyada smile karta hai aur thoda zyada clingy bhi hogya hai sirf tumhare liye…aur sach bolu toh jitna open aur comfortable main tumhare saath hu utna shayad kabhi kisi ke saath nahi hua…  
-
-Hmare chote chote moments…tera haath pakadna, tujhe hug karna, woh long hugs jaha time ruk sa jata hai, teri smile dekhna…ye sab mere liye bhot special hai…kabhi socha nahi tha ki koi mujhe itna special feel kara sakta hai…tumhare saath hone ka feeling hi alag hai…aur haan kabhi kabhi apke saamne abhi bhi nervous ho jata hu because aap mere liye bhot important ho…aur sach me tumhe lose karne ka thought bhi mujhe dara deta hai…thankyou for making me feel ki koi hai jo mera wait karta hai, jo mujhe dekh ke genuinely khush hota hai…mujhe u ka khayal rakhna, pamper karna aur smile karwana bhot pasand hai…loveyoubhoootsara ❤️
 
 </div>
-</div>
+
+<!-- ❤️ PAGE 4 FINAL -->
+<div class="page bg-glass" id="finalPage">
+
+<div class="glass typing" id="textBlock"></div>
+
 </div>
 
 <script>
 
-const pieces = document.querySelectorAll(".piece");
-const slots = document.querySelectorAll(".slot");
-let correct = 0;
-
-pieces.forEach(piece=>{
-piece.addEventListener("click", ()=>{
-
-let pos = piece.dataset.pos;
-
-slots.forEach(slot=>{
-if(slot.dataset.slot === pos && !slot.hasChildNodes()){
-slot.appendChild(piece);
-piece.style.position="relative";
-piece.style.left="0";
-piece.style.top="0";
-correct++;
-
-if(correct === 4){
-setTimeout(()=>{
-goPage("heartPage")
-},800)
-}
-}
-})
-
-})
-})
-
 /* ---------- PAGE SWITCH ---------- */
 
-function goPage(id){
+function go(id){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
 document.getElementById(id).classList.add("active")
 }
 
 /* ---------- HEART HOLD ---------- */
 
-const heart = document.getElementById("heart")
-let holdTimer;
-
-heart.addEventListener("touchstart", startHold)
-heart.addEventListener("mousedown", startHold)
-
-heart.addEventListener("touchend", cancelHold)
-heart.addEventListener("mouseup", cancelHold)
+let holdTimer
+const heart=document.getElementById("heart")
 
 function startHold(){
 document.getElementById("music").play()
-holdTimer = setTimeout(()=>{
-goPage("hugPage")
-setTimeout(()=>{
-goPage("finalPage")
-},3500)
-},2000)
+holdTimer=setTimeout(()=>{
+go("puzzlePage")
+},1800)
 }
 
-function cancelHold(){
-clearTimeout(holdTimer)
+function stopHold(){ clearTimeout(holdTimer) }
+
+heart.addEventListener("touchstart",startHold)
+heart.addEventListener("mousedown",startHold)
+heart.addEventListener("touchend",stopHold)
+heart.addEventListener("mouseup",stopHold)
+
+/* ---------- PUZZLE SETUP ---------- */
+
+const wrapper=document.querySelector(".puzzle-wrapper")
+const slots=document.querySelectorAll(".slot")
+
+let correct=0
+
+/* Create pieces */
+
+for(let i=0;i<4;i++){
+
+let piece=document.createElement("div")
+piece.className="piece"
+piece.dataset.piece=i
+
+piece.style.left=Math.random()*70+"vw"
+piece.style.top=Math.random()*70+"vh"
+
+document.body.appendChild(piece)
+
+dragElement(piece)
+}
+
+/* ---------- DRAG FUNCTION ---------- */
+
+function dragElement(el){
+
+let offsetX,offsetY
+
+el.addEventListener("touchstart",startDrag)
+el.addEventListener("mousedown",startDrag)
+
+function startDrag(e){
+
+e.preventDefault()
+
+offsetX=(e.touches?e.touches[0].clientX:e.clientX)-el.offsetLeft
+offsetY=(e.touches?e.touches[0].clientY:e.clientY)-el.offsetTop
+
+document.addEventListener("touchmove",moveDrag)
+document.addEventListener("mousemove",moveDrag)
+
+document.addEventListener("touchend",endDrag)
+document.addEventListener("mouseup",endDrag)
+}
+
+function moveDrag(e){
+
+el.style.left=(e.touches?e.touches[0].clientX:e.clientX)-offsetX+"px"
+el.style.top=(e.touches?e.touches[0].clientY:e.clientY)-offsetY+"px"
+}
+
+function endDrag(){
+
+slots.forEach(slot=>{
+
+let rect=slot.getBoundingClientRect()
+let pieceRect=el.getBoundingClientRect()
+
+if(
+pieceRect.left<rect.right &&
+pieceRect.right>rect.left &&
+pieceRect.top<rect.bottom &&
+pieceRect.bottom>rect.top &&
+slot.dataset.slot===el.dataset.piece &&
+!slot.hasChildNodes()
+){
+
+slot.appendChild(el)
+el.style.position="relative"
+el.style.left="0"
+el.style.top="0"
+
+correct++
+
+if(correct===4){
+setTimeout(()=>{
+go("hugPage")
+setTimeout(()=>go("finalPage"),3500)
+startTyping()
+},800)
+}
+
+}
+
+})
+
+document.removeEventListener("touchmove",moveDrag)
+document.removeEventListener("mousemove",moveDrag)
+}
+
+}
+
+/* ---------- TYPOGRAPHY TEXT ---------- */
+
+const text=`Goooooodmorningsss ❤️
+Today is Valentine’s Day…finally ek aur special din jo sirf hum dono ka hai…tbh jitna time humne saath spend kiya hai na woh kabhi bhot fast nikal jata hai aur kabhi lagta hai jaise har moment ko dil me store kar liya ho…tumhare saath rehke maine khud ka ek naya version dekha hai…ek aisa version jo zyada happy rehta hai, zyada smile karta hai aur thoda zyada clingy bhi hogya hai sirf tumhare liye…aur sach bolu toh jitna open aur comfortable main tumhare saath hu utna shayad kabhi kisi ke saath nahi hua…
+
+Hmare chote chote moments…tera haath pakadna, tujhe hug karna, woh long hugs jaha time ruk sa jata hai, teri smile dekhna…ye sab mere liye bhot special hai…kabhi socha nahi tha ki koi mujhe itna special feel kara sakta hai…tumhare saath hone ka feeling hi alag hai…aur haan kabhi kabhi apke saamne abhi bhi nervous ho jata hu because aap mere liye bhot important ho…aur sach me tumhe lose karne ka thought bhi mujhe dara deta hai…thankyou for making me feel ki koi hai jo mera wait karta hai, jo mujhe dekh ke genuinely khush hota hai…mujhe u ka khayal rakhna, pamper karna aur smile karwana bhot pasand hai…loveyoubhoootsara ❤️`
+
+function startTyping(){
+
+const block=document.getElementById("textBlock")
+block.innerHTML=""
+
+const lines=text.split("\n")
+
+lines.forEach((line,i)=>{
+
+let span=document.createElement("span")
+span.textContent=line
+block.appendChild(span)
+
+setTimeout(()=>{
+span.style.transition=".8s"
+span.style.opacity="1"
+span.style.transform="translateY(0)"
+},i*700)
+
+})
+
 }
 
 </script>
