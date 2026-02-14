@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine ❤️</title>
+<title>For Us ❤️</title>
 
 <style>
 
@@ -11,29 +10,28 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:Segoe UI;
 user-select:none;
--webkit-user-select:none;
 }
 
 body{
-font-family: 'Segoe UI', sans-serif;
 overflow:hidden;
 color:white;
 }
 
-/* ---------- PAGES ---------- */
+/* ---------- Pages ---------- */
 
 .page{
 position:absolute;
 width:100%;
 height:100%;
 display:flex;
-justify-content:center;
-align-items:center;
 flex-direction:column;
+align-items:center;
+justify-content:center;
 opacity:0;
 pointer-events:none;
-transition:1s ease;
+transition:0.8s;
 }
 
 .page.active{
@@ -41,17 +39,17 @@ opacity:1;
 pointer-events:auto;
 }
 
-/* ---------- BACKGROUNDS ---------- */
+/* ---------- Backgrounds ---------- */
 
-.bg-romantic{
+.bg1{
 background:linear-gradient(135deg,#ff9a9e,#fad0c4);
 }
 
-.bg-glass{
+.bg2{
 background:url("pic2.jpg") center/cover no-repeat;
 }
 
-/* ---------- HEART HOLD ---------- */
+/* ---------- Heart ---------- */
 
 .heart{
 font-size:80px;
@@ -63,50 +61,62 @@ animation:beat 1s infinite;
 50%{transform:scale(1.25)}
 }
 
-/* ---------- PUZZLE ---------- */
+/* ---------- Puzzle ---------- */
 
-.puzzle-wrapper{
-width:90vw;
-max-width:320px;
-height:90vw;
-max-height:320px;
+.puzzle-area{
+width:90%;
+max-width:360px;
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.slots{
 display:grid;
 grid-template-columns:1fr 1fr;
-grid-template-rows:1fr 1fr;
-gap:5px;
+gap:10px;
 }
 
 .slot{
+width:100%;
+aspect-ratio:1;
 border:2px dashed rgba(255,255,255,0.4);
 border-radius:15px;
-position:relative;
+overflow:hidden;
+}
+
+.pieces{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
 }
 
 .piece{
-width:45%;
-height:45%;
-position:absolute;
+width:80px;
+height:80px;
 background-image:url("pic1.jpg");
 background-size:200% 200%;
 border-radius:12px;
-box-shadow:0 5px 15px rgba(0,0,0,.4);
+cursor:pointer;
 touch-action:none;
 }
 
-/* puzzle image positions */
+/* piece image slicing */
+
 [data-piece="0"]{background-position:0% 0%;}
 [data-piece="1"]{background-position:100% 0%;}
 [data-piece="2"]{background-position:0% 100%;}
 [data-piece="3"]{background-position:100% 100%;}
 
-/* ---------- HUG ---------- */
+/* ---------- Hug ---------- */
 
 .hug{
 width:85%;
 max-width:350px;
 border-radius:20px;
 box-shadow:0 0 40px pink;
-animation:zoom 2s ease forwards;
+animation:zoom 2s forwards;
 }
 
 @keyframes zoom{
@@ -114,7 +124,7 @@ from{transform:scale(.7);opacity:0}
 to{transform:scale(1);opacity:1}
 }
 
-/* ---------- FINAL TEXT ---------- */
+/* ---------- Glass ---------- */
 
 .glass{
 background:rgba(255,255,255,0.15);
@@ -123,9 +133,13 @@ padding:20px;
 border-radius:20px;
 width:90%;
 max-width:500px;
-font-size:17px;
 line-height:1.6;
+font-size:17px;
+max-height:80vh;
+overflow:auto;
 }
+
+/* ---------- Typing ---------- */
 
 .typing span{
 display:block;
@@ -138,190 +152,162 @@ transform:translateY(20px);
 
 <body>
 
-<audio id="music" src="mus1.mp3"></audio>
+<audio id="music" src="mus1.mp3" loop></audio>
 
-<!-- ❤️ PAGE 1 HEART HOLD -->
-<div class="page active bg-romantic" id="heartPage">
-
-<h2>Hold the heart to unlock ❤️</h2>
+<!-- ❤️ HEART PAGE -->
+<div class="page active bg1" id="heartPage">
+<h2>Hold the heart to enter ❤️</h2>
 <div class="heart" id="heart">❤️</div>
-
 </div>
 
-<!-- 🧩 PAGE 2 PUZZLE -->
-<div class="page bg-romantic" id="puzzlePage">
+<!-- 🧩 PUZZLE PAGE -->
+<div class="page bg1" id="puzzlePage">
 
-<h3>Complete our memory 🧩</h3>
+<h2>Complete Our Memory 🧩</h2>
 
-<div class="puzzle-wrapper">
+<div class="puzzle-area">
 
+<div class="slots">
 <div class="slot" data-slot="0"></div>
 <div class="slot" data-slot="1"></div>
 <div class="slot" data-slot="2"></div>
 <div class="slot" data-slot="3"></div>
+</div>
+
+<div class="pieces" id="pieces"></div>
 
 </div>
 
 </div>
 
-<!-- 🤍 PAGE 3 HUG -->
-<div class="page bg-romantic" id="hugPage">
+<!-- 💫 MEMORY COMPLETE -->
+<div class="page bg1" id="memoryPage">
+<h1>Memory Complete ❤️</h1>
+</div>
 
-<h2>Sending you the warmest hug 🤍</h2>
+<!-- 🤍 HUG PAGE -->
+<div class="page bg1" id="hugPage">
+<h2>Sending You A Hug 🤍</h2>
 <img src="hug.jpg" class="hug">
-
 </div>
 
-<!-- ❤️ PAGE 4 FINAL -->
-<div class="page bg-glass" id="finalPage">
-
-<div class="glass typing" id="textBlock"></div>
-
+<!-- 💌 FINAL PAGE -->
+<div class="page bg2" id="finalPage">
+<div class="glass typing" id="text"></div>
 </div>
 
 <script>
 
-/* ---------- PAGE SWITCH ---------- */
+/* ---------- Page Switch ---------- */
 
-function go(id){
+function show(id){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
 document.getElementById(id).classList.add("active")
 }
 
-/* ---------- HEART HOLD ---------- */
+/* ---------- Heart Hold ---------- */
 
 let holdTimer
 const heart=document.getElementById("heart")
+const music=document.getElementById("music")
 
 function startHold(){
-document.getElementById("music").play()
-holdTimer=setTimeout(()=>{
-go("puzzlePage")
-},1800)
+music.play()
+holdTimer=setTimeout(()=>show("puzzlePage"),1500)
 }
 
-function stopHold(){ clearTimeout(holdTimer) }
+function stopHold(){clearTimeout(holdTimer)}
 
 heart.addEventListener("touchstart",startHold)
 heart.addEventListener("mousedown",startHold)
 heart.addEventListener("touchend",stopHold)
 heart.addEventListener("mouseup",stopHold)
 
-/* ---------- PUZZLE SETUP ---------- */
+/* ---------- Puzzle ---------- */
 
-const wrapper=document.querySelector(".puzzle-wrapper")
+const piecesContainer=document.getElementById("pieces")
 const slots=document.querySelectorAll(".slot")
+let placed=0
 
-let correct=0
+let order=[0,1,2,3].sort(()=>Math.random()-0.5)
 
-/* Create pieces */
-
-for(let i=0;i<4;i++){
-
+order.forEach(num=>{
 let piece=document.createElement("div")
 piece.className="piece"
-piece.dataset.piece=i
+piece.dataset.piece=num
+piecesContainer.appendChild(piece)
+drag(piece)
+})
 
-piece.style.left=Math.random()*70+"vw"
-piece.style.top=Math.random()*70+"vh"
+function drag(piece){
 
-document.body.appendChild(piece)
+let selected=null
 
-dragElement(piece)
-}
-
-/* ---------- DRAG FUNCTION ---------- */
-
-function dragElement(el){
-
-let offsetX,offsetY
-
-el.addEventListener("touchstart",startDrag)
-el.addEventListener("mousedown",startDrag)
-
-function startDrag(e){
-
-e.preventDefault()
-
-offsetX=(e.touches?e.touches[0].clientX:e.clientX)-el.offsetLeft
-offsetY=(e.touches?e.touches[0].clientY:e.clientY)-el.offsetTop
-
-document.addEventListener("touchmove",moveDrag)
-document.addEventListener("mousemove",moveDrag)
-
-document.addEventListener("touchend",endDrag)
-document.addEventListener("mouseup",endDrag)
-}
-
-function moveDrag(e){
-
-el.style.left=(e.touches?e.touches[0].clientX:e.clientX)-offsetX+"px"
-el.style.top=(e.touches?e.touches[0].clientY:e.clientY)-offsetY+"px"
-}
-
-function endDrag(){
+piece.addEventListener("touchstart",()=>selected=piece)
+piece.addEventListener("mousedown",()=>selected=piece)
 
 slots.forEach(slot=>{
+slot.addEventListener("touchend",()=>drop(slot))
+slot.addEventListener("mouseup",()=>drop(slot))
+})
 
-let rect=slot.getBoundingClientRect()
-let pieceRect=el.getBoundingClientRect()
+function drop(slot){
 
-if(
-pieceRect.left<rect.right &&
-pieceRect.right>rect.left &&
-pieceRect.top<rect.bottom &&
-pieceRect.bottom>rect.top &&
-slot.dataset.slot===el.dataset.piece &&
-!slot.hasChildNodes()
-){
+if(!selected) return
 
-slot.appendChild(el)
-el.style.position="relative"
-el.style.left="0"
-el.style.top="0"
+if(slot.dataset.slot===selected.dataset.piece && !slot.firstChild){
 
-correct++
+slot.appendChild(selected)
+selected.style.width="100%"
+selected.style.height="100%"
+selected.style.cursor="default"
 
-if(correct===4){
+placed++
+selected=null
+
+if(placed===4){
 setTimeout(()=>{
-go("hugPage")
-setTimeout(()=>go("finalPage"),3500)
+show("memoryPage")
+
+setTimeout(()=>{
+show("hugPage")
+
+setTimeout(()=>{
+show("finalPage")
 startTyping()
+},3500)
+
+},2000)
+
 },800)
 }
 
 }
-
-})
-
-document.removeEventListener("touchmove",moveDrag)
-document.removeEventListener("mousemove",moveDrag)
 }
 
 }
 
-/* ---------- TYPOGRAPHY TEXT ---------- */
+/* ---------- Typing ---------- */
 
-const text=`Goooooodmorningsss ❤️
+const message=`Goooooodmorningsss ❤️
 Today is Valentine’s Day…finally ek aur special din jo sirf hum dono ka hai…tbh jitna time humne saath spend kiya hai na woh kabhi bhot fast nikal jata hai aur kabhi lagta hai jaise har moment ko dil me store kar liya ho…tumhare saath rehke maine khud ka ek naya version dekha hai…ek aisa version jo zyada happy rehta hai, zyada smile karta hai aur thoda zyada clingy bhi hogya hai sirf tumhare liye…aur sach bolu toh jitna open aur comfortable main tumhare saath hu utna shayad kabhi kisi ke saath nahi hua…
 
 Hmare chote chote moments…tera haath pakadna, tujhe hug karna, woh long hugs jaha time ruk sa jata hai, teri smile dekhna…ye sab mere liye bhot special hai…kabhi socha nahi tha ki koi mujhe itna special feel kara sakta hai…tumhare saath hone ka feeling hi alag hai…aur haan kabhi kabhi apke saamne abhi bhi nervous ho jata hu because aap mere liye bhot important ho…aur sach me tumhe lose karne ka thought bhi mujhe dara deta hai…thankyou for making me feel ki koi hai jo mera wait karta hai, jo mujhe dekh ke genuinely khush hota hai…mujhe u ka khayal rakhna, pamper karna aur smile karwana bhot pasand hai…loveyoubhoootsara ❤️`
 
 function startTyping(){
 
-const block=document.getElementById("textBlock")
-block.innerHTML=""
+let box=document.getElementById("text")
+box.innerHTML=""
 
-const lines=text.split("\n")
+let lines=message.split("\n")
 
 lines.forEach((line,i)=>{
-
 let span=document.createElement("span")
 span.textContent=line
-block.appendChild(span)
+box.appendChild(span)
 
 setTimeout(()=>{
-span.style.transition=".8s"
+span.style.transition="0.8s"
 span.style.opacity="1"
 span.style.transform="translateY(0)"
 },i*700)
